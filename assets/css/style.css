@@ -8,3 +8,7 @@ body{
 .cursor-pointer{
     cursor: pointer;
 }
+
+#main{
+    height: calc(100vh - 150px);
+}

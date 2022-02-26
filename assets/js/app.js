@@ -58,15 +58,15 @@ ageButton.addEventListener("click", () => {
                                 <table class="table">
                                     <tr>
                                         <th>Year</th>
-                                        <td>${getYearForUser} yr</td>
+                                        <td>${getYearForUser} Years</td>
                                     </tr>
                                     <tr>
                                         <th>Months</th>
-                                        <td>${getMonthForUser} month</td>
+                                        <td>${getMonthForUser} Month</td>
                                     </tr>
                                     <tr>
                                         <th>Day</th>
-                                        <td>${getDateForUser} days</td>
+                                        <td>${getDateForUser} Days</td>
                                     </tr>
 
                                 </table>
