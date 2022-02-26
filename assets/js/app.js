@@ -52,6 +52,7 @@ ageButton.addEventListener("click", () => {
         let getTotalHrOfLife = getTotalDaysOfYear * 24;
         let getTotalMinOfLife = getTotalHrOfLife * 60;
         let getTotalSecOfLife = getTotalMinOfLife * 60;
+        let getTotalWeeks = parseInt(getTotalDaysOfYear / 7);
 
         collapsed.innerHTML = `
                             <div class="card-header">
@@ -70,6 +71,10 @@ ageButton.addEventListener("click", () => {
                                     <tr>
                                         <th>Day</th>
                                         <td>${getDateForUser} Days</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Total Weeks</th>
+                                        <td>${getTotalWeeks} Weeks</td>
                                     </tr>
 
                                 </table>
