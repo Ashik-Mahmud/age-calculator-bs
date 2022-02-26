@@ -36,33 +36,39 @@ ageButton.addEventListener("click", () => {
         collapsed.classList.add('show')
         let userDateArr = getUserDate.split('-');
         let [uYear, uMonth, uDay] = userDateArr;
-
+        console.log(uYear, uMonth, uDay)
 
         let todayDateArr = today.split('-');
         let [tYear, tMonth, tDay] = todayDateArr;
+        console.log(tYear,tMonth,tDay)
 
         let getYearForUser = parseInt(tYear) - parseInt(uYear);
         let getMonthForUser = Math.abs(parseInt(tMonth) - parseInt(uMonth));
         let getDateForUser = Math.abs(parseInt(tDay) - parseInt(uDay));
-        
-        let getTotalDaysOfYear = (getYearForUser * 365) + (getMonthForUser * 30) + getDateForUser;
+
+        let convertIntoMonthYear = getYearForUser * 12 - getMonthForUser;
+        let yearFul = (convertIntoMonthYear / 12).toString().split('.')
+        let [year, mon] = yearFul;
+        let realMonths = Math.ceil((convertIntoMonthYear * parseFloat('0.'+mon)) / parseInt(year));
+
+        let getTotalDaysOfYear = (parseInt(year) * 365) + (realMonths * 30) + getDateForUser;
         let getTotalHrOfLife = getTotalDaysOfYear * 24;
         let getTotalMinOfLife = getTotalHrOfLife * 60;
         let getTotalSecOfLife = getTotalMinOfLife * 60;
 
         collapsed.innerHTML = `
                             <div class="card-header">
-                                <h3>Now Your Age ${getYearForUser} Years ${getMonthForUser} Months ${getDateForUser} Days</h3>
+                                <h3>Now Your Age ${year} Years ${realMonths -1} Months ${getDateForUser} Days</h3>
                             </div>
                             <div class="card-body" id="age-body">
                                 <table class="table">
                                     <tr>
                                         <th>Year</th>
-                                        <td>${getYearForUser} Years</td>
+                                        <td>${year} Years</td>
                                     </tr>
                                     <tr>
                                         <th>Months</th>
-                                        <td>${getMonthForUser} Month</td>
+                                        <td>${realMonths} Month</td>
                                     </tr>
                                     <tr>
                                         <th>Day</th>
