@@ -27,6 +27,6 @@ and many more.......
 # Live link at about 
 
 # Demo Preview this project 
-![imageScreenshot](./preview.gif)
+<img src="./preview.gif" style="width: 100%;" alt="preview image" />
 
 > Thanks for reach out me on github
