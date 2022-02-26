@@ -36,19 +36,16 @@ ageButton.addEventListener("click", () => {
         collapsed.classList.add('show')
         let userDateArr = getUserDate.split('-');
         let [uYear, uMonth, uDay] = userDateArr;
-        console.log(uYear, uMonth, uDay)
-
         let todayDateArr = today.split('-');
         let [tYear, tMonth, tDay] = todayDateArr;
-        console.log(tYear,tMonth,tDay)
-
+        
         let getYearForUser = parseInt(tYear) - parseInt(uYear);
         let getMonthForUser = Math.abs(parseInt(tMonth) - parseInt(uMonth));
         let getDateForUser = Math.abs(parseInt(tDay) - parseInt(uDay));
 
         let convertIntoMonthYear = getYearForUser * 12 - getMonthForUser;
-        let yearFul = (convertIntoMonthYear / 12).toString().split('.')
-        let [year, mon] = yearFul;
+        let yearAndMonth = (convertIntoMonthYear / 12).toString().split('.')
+        let [year, mon] = yearAndMonth;
         let realMonths = Math.ceil((convertIntoMonthYear * parseFloat('0.'+mon)) / parseInt(year));
 
         let getTotalDaysOfYear = (parseInt(year) * 365) + (realMonths * 30) + getDateForUser;
