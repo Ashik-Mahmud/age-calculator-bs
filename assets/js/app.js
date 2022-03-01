@@ -22,72 +22,91 @@ const setDefaultDate = () => {
     todayDateField.value = fullDate;
 }
 
+// error function 
+const getError = (errorText) => {
+    collapsed.classList.add('show')
+    collapsed.innerHTML = errorText;
+}
 /* 2. create a function for get value from input date  */
 ageButton.addEventListener("click", () => {
     let getUserDate = getUserAgeField.value;
     let today = todayDateField.value;
+    const userDate = new Date(getUserDate);
+    const getTodayDate = new Date(today);
     if (getUserAgeField.value === '' || todayDateField.value === '') {
-        collapsed.classList.add('show')
-        collapsed.innerHTML = `<div class="alert alert-danger mb-0">All field are required.</div>`;
+        getError(`<div class="alert alert-danger mb-0">All field are required.</div>`)
     } else if (getUserDate === today) {
-        collapsed.classList.add('show')
-        collapsed.innerHTML = `<div class="alert alert-danger mb-0">🤣Hahah! You put today date.</div>`;
+        getError(`<div class="alert alert-danger mb-0">🤣Hahah! You put invalid date.</div>`)
+    } else if ((userDate.getFullYear() === getTodayDate.getFullYear() && userDate.getMonth() > getTodayDate.getMonth())) {
+        getError(`<div class="alert alert-danger mb-0">🤣Hahah! Invalid Months</div>`);
+    } else if (userDate.getFullYear() === getTodayDate.getFullYear() && userDate.getDate() >= getTodayDate.getDate()) {
+        getError(`<div class="alert alert-danger mb-0">🤣Hahah! Invalid Date</div>`);
     } else {
         collapsed.classList.add('show')
-        let userDateArr = getUserDate.split('-');
-        let [uYear, uMonth, uDay] = userDateArr;
-        let todayDateArr = today.split('-');
-        let [tYear, tMonth, tDay] = todayDateArr;
-        
-        let getYearForUser = parseInt(tYear) - parseInt(uYear);
-        let getMonthForUser = Math.abs(parseInt(tMonth) - parseInt(uMonth));
-        let getDateForUser = Math.abs(parseInt(tDay) - parseInt(uDay));
+        // user input date 
+        let inputDate = userDate.getDate();
+        let inputMonth = 1 + userDate.getMonth();
+        let inputYear = userDate.getFullYear();
 
-        let convertIntoMonthYear = getYearForUser * 12 - getMonthForUser;
-        let yearAndMonth = (convertIntoMonthYear / 12).toString().split('.')
-        let [year, mon] = yearAndMonth;
-        let realMonths = Math.ceil((convertIntoMonthYear * parseFloat('0.'+mon)) / parseInt(year));
+        // today default date 
+        let todayDate = getTodayDate.getDate();
+        let todayMonth = 1 + getTodayDate.getMonth();
+        let todayYear = getTodayDate.getFullYear();
 
-        let getTotalDaysOfYear = (parseInt(year) * 365) + (realMonths * 30) + getDateForUser;
-        let getTotalHrOfLife = getTotalDaysOfYear * 24;
-        let getTotalMinOfLife = getTotalHrOfLife * 60;
-        let getTotalSecOfLife = getTotalMinOfLife * 60;
-        let getTotalWeeks = parseInt(getTotalDaysOfYear / 7);
+        const monthsArr = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
+        if (inputDate > todayDate) {
+            todayDate = todayDate + monthsArr[todayMonth - 1];
+            todayMonth = todayMonth - 1;
+        }
+
+        if (inputMonth > todayMonth) {
+            todayMonth = todayMonth + 12;
+            todayYear = todayYear - 1;
+        }
+
+        let year = todayYear - inputYear;
+        let month = todayMonth - inputMonth;
+        let date = todayDate - inputDate;
+        let getTotalWeeks = Math.floor(((((year * 12) + month) * 30) + date) / 7);
+        let getTotalDays = ((((year * 12) + month) * 30) + date);
+        let getTotalHours = getTotalDays * 24;
+        let getTotalMin = getTotalHours * 60;
+        let getTotalSec = getTotalMin * 60;
         collapsed.innerHTML = `
                             <div class="card-header">
-                                <h3>Now Your Age ${year} Years ${realMonths -1} Months ${getDateForUser} Days</h3>
+                                <h3>Now Your Age ${year} Years ${month} Months ${date} Days</h3>
                             </div>
                             <div class="card-body" id="age-body">
                                 <table class="table">
                                     <tr>
-                                        <th>Year</th>
+                                        <th>Total Year</th>
                                         <td>${year} Years</td>
                                     </tr>
                                     <tr>
                                         <th>Months</th>
-                                        <td>${realMonths} Month</td>
+                                        <td>${month} Month</td>
                                     </tr>
                                     <tr>
-                                        <th>Day</th>
-                                        <td>${getDateForUser} Days</td>
+                                        <th>Total Day</th>
+                                        <td>${date} Days</td>
                                     </tr>
                                     <tr>
                                         <th>Total Weeks</th>
-                                        <td>${getTotalWeeks} Weeks</td>
+                                        <td>${getTotalWeeks ? getTotalWeeks: '0'} Weeks</td>
                                     </tr>
 
                                 </table>
                                 <table class="table">
                                     <tr>
                                         <th>Total days</th>
-                                        <td>${getTotalDaysOfYear} days</td>
+                                        <td>${getTotalDays ? getTotalDays: '0'} days (Approx)</td>
                                         <th>Total Hours</th>
-                                        <td>${getTotalHrOfLife} hr</td>
+                                        <td>${getTotalHours ? getTotalHours: '0'} hr (Approx)</td>
                                         <th>Total Minutes</th>
-                                        <td>${getTotalMinOfLife} min</td>
+                                        <td>${getTotalMin ? getTotalMin: '0'} min (Approx)</td>
                                         <th>Total Seconds</th>
-                                        <td>${getTotalSecOfLife} sec</td>
+                                        <td>${getTotalSec ? getTotalSec: '0'} sec (Approx)</td>
                                     </tr>
                                 </table>
                             </div>`;
