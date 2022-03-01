@@ -39,7 +39,7 @@ ageButton.addEventListener("click", () => {
         getError(`<div class="alert alert-danger mb-0">🤣Hahah! You put invalid date.</div>`)
     } else if ((userDate.getFullYear() === getTodayDate.getFullYear() && userDate.getMonth() > getTodayDate.getMonth())) {
         getError(`<div class="alert alert-danger mb-0">🤣Hahah! Invalid Months</div>`);
-    } else if (userDate.getFullYear() === getTodayDate.getFullYear() && userDate.getDate() >= getTodayDate.getDate()) {
+    } else if (userDate.getFullYear() === getTodayDate.getFullYear() && userDate.getDate() >= getTodayDate.getDate() && userDate.getMonth() >= getTodayDate.getMonth()) {
         getError(`<div class="alert alert-danger mb-0">🤣Hahah! Invalid Date</div>`);
     } else {
         collapsed.classList.add('show')
